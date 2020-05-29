@@ -31,7 +31,7 @@
 	cstmt.setString(1, e_sid);
 	cstmt.setString(2, e_cid);
 	cstmt.setInt(3, e_cno);
-	cstmt.registerOutputParameter(4, java.sql.Trypes.VARCHAR);
+	cstmt.registerOutParameter(4, java.sql.Types.VARCHAR);
 	try{
 		cstmt.execute();
 		result = cstmt.getString(4);
