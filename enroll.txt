@@ -2,6 +2,8 @@ CREATE TABLE enroll(
 e_sid varchar2(7) CONSTRAINT enroll_fk1 REFERENCES student(s_id), 
 e_cid varchar2(8), 
 e_cno NUMBER, 
+e_year NUMBER, 
+e_semester NUMBER, 
 CONSTRAINT enroll_pk PRIMARY KEY(e_sid, e_cid, e_cno),
 CONSTRAINT enroll_fk2 FOREIGN KEY(e_cid, e_cno) REFERENCES course(c_id, c_no));
 

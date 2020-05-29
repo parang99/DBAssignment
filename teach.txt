@@ -1,0 +1,13 @@
+CREATE TABLE teach(
+t_max NUMBER, 
+t_year NUMBER, 
+t_semester NUMBER, 
+t_time
+t_cid VARCHAR2(8), 
+t_cno NUMBER
+);
+
+
+INSERT INTO TEACH VALUES('1111111', 20200103, 1);
+
+

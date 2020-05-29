@@ -1,0 +1,20 @@
+CREATE OR REPLACE PROCEDURE SelectTimeTable(sStudentId IN VARCHAR2, nYear IN NUMBER, nSemester IN NUMBER)
+IS
+	sum NUMBER := 0;
+	credits NUMBER := 0;
+CURSOR time_table IS
+	SELECT c_time, course.c_id, c_name, course.c_no, c_credit, class.c_where
+	FROM course, enroll, class
+	WHERE e_sid = sStudentId and e_cid = course.c_id and e_cno = course.c_no and course.c_id = class.c_id and course.c_no = class.c_no;
+BEGIN
+	DBMS_OUTPUT.put_line(nYear || '년도 ' || nSemester || '학기의 ' || sStudentId || '님의 수강신청 시간표입니다.');
+
+	FOR table_list IN time_table LOOP
+		DBMS_OUTPUT.put_line('교시:' || table_list.c_time || ', 과목번호:' || table_list.c_id || ', 과목명:' || table_list.c_name || ', 분반:' || table_list.c_no || ', 학점:' || table_list.c_credit || ', 장소:' || table_list.c_where);
+		sum := sum + 1;
+		credits := credits + table_list.c_credit;
+	END LOOP;
+
+	DBMS_OUTPUT.put_line('총 ' || sum || ' 과목과 총 ' || credits || '학점을 신청하였습니다.');
+END;
+/

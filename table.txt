@@ -5,7 +5,7 @@ drop table class;
 purge recyclebin;
 
 CREATE TABLE student(
-s_id varchar2(20) CONSTRAINT student_pk PRIMARY KEY, 
+s_id varchar2(7) CONSTRAINT student_pk PRIMARY KEY, 
 s_pwd varchar2(20) CONSTRAINT student_nn NOT NULL, 
 s_name varchar2(6), 
 s_addr varchar2(60)
