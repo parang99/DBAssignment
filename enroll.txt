@@ -1,0 +1,14 @@
+drop table enroll purge;
+
+
+CREATE TABLE enroll(
+e_sid NUMBER CONSTRAINT enroll_fk1 REFERENCES student(s_id), 
+e_cid NUMBER, 
+e_cno NUMBER, 
+CONSTRAINT enroll_pk PRIMARY KEY(e_sid, e_cid, e_cno),
+CONSTRAINT enroll_fk2 FOREIGN KEY(e_cid, e_cno) REFERENCES course(c_id, c_no));
+
+INSERT INTO ENROLL VALUES(1111111, 20200103, 1);
+INSERT INTO ENROLL VALUES(9999999, 20200101, 1);
+INSERT INTO ENROLL VALUES(1010101, 20200101, 2);
+
