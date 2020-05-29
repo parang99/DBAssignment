@@ -1,5 +1,5 @@
 CREATE TABLE course(
-c_id NUMBER, 
+c_id varchar2(8), 
 c_no NUMBER, 
 c_name varchar2(50), 
 c_credit NUMBER, 
