@@ -1,0 +1,5 @@
+drop table enroll;
+drop table student;
+drop table course;
+drop table class;
+purge recyclebin;

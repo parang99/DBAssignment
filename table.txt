@@ -1,0 +1,72 @@
+drop table enroll;
+drop table student;
+drop table course;
+drop table class;
+purge recyclebin;
+
+CREATE TABLE student(
+s_id varchar2(20) CONSTRAINT student_pk PRIMARY KEY, 
+s_pwd varchar2(20) CONSTRAINT student_nn NOT NULL, 
+s_name varchar2(6), 
+s_addr varchar2(60)
+);
+
+INSERT INTO STUDENT VALUES('1111111', 'oneone', '정하나', '경기도 광명시 광덕산로 26');
+INSERT INTO STUDENT VALUES('2222222', 'twotwo', '김둘둘', '서울특별시 용산구 청파로 47길');
+INSERT INTO STUDENT VALUES('3333333', 'three', '이셋셋', '서울특별시 성북구 성북로4길 52');
+INSERT INTO STUDENT VALUES('4444444', 'four', '심넷넷', '서울특별시 광진구 구의강변로 104');
+INSERT INTO STUDENT VALUES('5555555', 'five', '연다섯', '강원도 춘천시 춘천로 167번길');
+INSERT INTO STUDENT VALUES('6666666', 'sixsix', '나여섯', '강원도 홍천군 홍천읍 홍천로 388');
+INSERT INTO STUDENT VALUES('7777777', 'seven', '권일곱', '경기도 광명시 하안로');
+INSERT INTO STUDENT VALUES('8888888', 'eight', 'Janet', '경기도 광명시 일직로');
+INSERT INTO STUDENT VALUES('9999999', 'nine', 'Stella', '경기도 광명시 오리로');
+INSERT INTO STUDENT VALUES('1010101', 'tenten', 'Juno', '경기도 광명시 광명로');
+
+
+
+CREATE TABLE course(
+c_id NUMBER, 
+c_no NUMBER, 
+c_name varchar2(50), 
+c_credit NUMBER, 
+c_time NUMBER, 
+c_max NUMBER, 
+c_day NUMBER, 
+CONSTRAINT course_pk PRIMARY KEY(c_id, c_no));
+
+INSERT INTO COURSE VALUES(20200101, 1, '데이터베이스 프로그래밍', 3, 2, 31, 2); 
+INSERT INTO COURSE VALUES(20200101, 2, '데이터베이스 프로그래밍', 3, 4, 31, 2);
+INSERT INTO COURSE VALUES(20200102, 1, '데이터베이스 설계와 질의', 3, 2, 68, 4); 
+INSERT INTO COURSE VALUES(20200102, 2, '데이터베이스 설계와 질의', 3, 4, 68, 4); 
+INSERT INTO COURSE VALUES(20200103, 1, '컴퓨터수학', 3, 2, 50, 5); 
+INSERT INTO COURSE VALUES(20200201, 1, '특수교육학개론', 3, 5, 30, 3); 
+INSERT INTO COURSE VALUES(20200201, 2, '특수교육학개론', 3, 6, 30, 3); 
+INSERT INTO COURSE VALUES(20200301, 1, '졸업 프로젝트1', 3, 1, 3, 4); 
+INSERT INTO COURSE VALUES(20200301, 2, '졸업 프로젝트2', 3, 1, 5, 6); 
+
+
+
+CREATE TABLE enroll(
+e_sid varchar2(7) CONSTRAINT enroll_fk1 REFERENCES student(s_id), 
+e_cid NUMBER, 
+e_cno NUMBER, 
+CONSTRAINT enroll_pk PRIMARY KEY(e_sid, e_cid, e_cno),
+CONSTRAINT enroll_fk2 FOREIGN KEY(e_cid, e_cno) REFERENCES course(c_id, c_no));
+
+INSERT INTO ENROLL VALUES('1111111', 20200103, 1);
+INSERT INTO ENROLL VALUES('9999999', 20200101, 1);
+INSERT INTO ENROLL VALUES('1010101', 20200101, 2);
+
+
+
+CREATE TABLE CLASS(
+p_id NUMBER,
+c_id  NUMBER,
+c_no NUMBER,
+c_where VARCHAR(30));
+
+INSERT INTO CLASS VALUES(1, 20200101, 1, '명신관');
+INSERT INTO CLASS VALUES(1, 20200102, 1, '명신관');
+INSERT INTO CLASS VALUES(2, 20200103, 1, '명신관');
+INSERT INTO CLASS VALUES(2, 20200103, 2, '명신관');
+INSERT INTO CLASS VALUES(2, 20200103, 3, '명신관');

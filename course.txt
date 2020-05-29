@@ -1,5 +1,3 @@
-drop table course purge;
-
 CREATE TABLE course(
 c_id NUMBER, 
 c_no NUMBER, 
