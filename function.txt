@@ -2,10 +2,19 @@ CREATE OR REPLACE FUNCTION Date2EnrollYear(dDate IN DATE)
 RETURN NUMBER
 IS
 	year NUMBER;
+	month NUMBER;
 BEGIN
 	SELECT TO_NUMBER(TO_CHAR(dDate, 'YYYY'))
 	INTO year
 	FROM dual;
+
+	SELECT TO_NUMBER(TO_CHAR(dDate, 'MM'))
+	INTO month
+	FROM dual;
+
+	IF (month >= 11) THEN
+		year := year + 1;
+	END IF;
 
 	RETURN year;
 END;
@@ -20,9 +29,7 @@ BEGIN
 	INTO semester
 	FROM dual;
 
-	IF (semester >=11) THEN
-		semester := 1; /* 다음 년도 */
-	ELSIF (semester >= 5) THEN
+	IF (semester >=5 and semester <= 10) THEN
 		semester := 2;
 	ELSE
 		semester := 1;	

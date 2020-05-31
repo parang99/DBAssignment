@@ -1,7 +1,8 @@
 drop table enroll;
-drop table student;
-drop table course;
+drop table teach;
 drop table class;
+drop table course;
+drop table student;
 purge recyclebin;
 
 CREATE TABLE student(
@@ -10,7 +11,6 @@ s_pwd varchar2(20) CONSTRAINT student_nn NOT NULL,
 s_name varchar2(6), 
 s_addr varchar2(60)
 );
-
 INSERT INTO STUDENT VALUES('1111111', 'oneone', '정하나', '경기도 광명시 광덕산로 26');
 INSERT INTO STUDENT VALUES('2222222', 'twotwo', '김둘둘', '서울특별시 용산구 청파로 47길');
 INSERT INTO STUDENT VALUES('3333333', 'three', '이셋셋', '서울특별시 성북구 성북로4길 52');
@@ -22,51 +22,69 @@ INSERT INTO STUDENT VALUES('8888888', 'eight', 'Janet', '경기도 광명시 일직로');
 INSERT INTO STUDENT VALUES('9999999', 'nine', 'Stella', '경기도 광명시 오리로');
 INSERT INTO STUDENT VALUES('1010101', 'tenten', 'Juno', '경기도 광명시 광명로');
 
-
-
 CREATE TABLE course(
 c_id varchar2(8), 
 c_no NUMBER, 
 c_name varchar2(50), 
 c_credit NUMBER, 
-c_time NUMBER, 
-c_max NUMBER, 
-c_day NUMBER, 
-CONSTRAINT course_pk PRIMARY KEY(c_id, c_no));
-
-INSERT INTO COURSE VALUES(20200101, 1, '데이터베이스 프로그래밍', 3, 2, 31, 2); 
-INSERT INTO COURSE VALUES(20200101, 2, '데이터베이스 프로그래밍', 3, 4, 31, 2);
-INSERT INTO COURSE VALUES(20200102, 1, '데이터베이스 설계와 질의', 3, 2, 68, 4); 
-INSERT INTO COURSE VALUES(20200102, 2, '데이터베이스 설계와 질의', 3, 4, 68, 4); 
-INSERT INTO COURSE VALUES(20200103, 1, '컴퓨터수학', 3, 2, 50, 5); 
-INSERT INTO COURSE VALUES(20200201, 1, '특수교육학개론', 3, 5, 30, 3); 
-INSERT INTO COURSE VALUES(20200201, 2, '특수교육학개론', 3, 6, 30, 3); 
-INSERT INTO COURSE VALUES(20200301, 1, '졸업 프로젝트1', 3, 1, 3, 4); 
-INSERT INTO COURSE VALUES(20200301, 2, '졸업 프로젝트2', 3, 1, 5, 6); 
-
-
-
-CREATE TABLE enroll(
-e_sid varchar2(7) CONSTRAINT enroll_fk1 REFERENCES student(s_id), 
-e_cid varchar2(8), 
-e_cno NUMBER, 
-CONSTRAINT enroll_pk PRIMARY KEY(e_sid, e_cid, e_cno),
-CONSTRAINT enroll_fk2 FOREIGN KEY(e_cid, e_cno) REFERENCES course(c_id, c_no));
-
-INSERT INTO ENROLL VALUES('1111111', 20200103, 1);
-INSERT INTO ENROLL VALUES('9999999', 20200101, 1);
-INSERT INTO ENROLL VALUES('1010101', 20200101, 2);
-
-
+CONSTRAINT course_pk PRIMARY KEY(c_id, c_no)
+);
+INSERT INTO COURSE VALUES('20200101', 1, '데이터베이스 프로그래밍', 3); 
+INSERT INTO COURSE VALUES('20200101', 2, '데이터베이스 프로그래밍', 3);
+INSERT INTO COURSE VALUES('20200102', 1, '데이터베이스 설계와 질의', 3); 
+INSERT INTO COURSE VALUES('20200102', 2, '데이터베이스 설계와 질의', 3); 
+INSERT INTO COURSE VALUES('20200103', 1, '컴퓨터수학', 3); 
+INSERT INTO COURSE VALUES('20200103', 2, '컴퓨터수학', 3); 
+INSERT INTO COURSE VALUES('20200103', 3, '컴퓨터수학', 3); 
+INSERT INTO COURSE VALUES('20200201', 1, '특수교육학개론', 2); 
+INSERT INTO COURSE VALUES('20200201', 2, '특수교육학개론', 2); 
+INSERT INTO COURSE VALUES('20200301', 1, '졸업 프로젝트1', 3); 
+INSERT INTO COURSE VALUES('20200301', 2, '졸업 프로젝트2', 3); 
 
 CREATE TABLE CLASS(
 p_id NUMBER,
-c_id  NUMBER,
-c_no NUMBER,
-c_where VARCHAR(30));
+c_cid varchar2(8),
+c_cno NUMBER,
+c_where VARCHAR(30),
+CONSTRAINT class_pk PRIMARY KEY(c_cid, c_cno), 
+CONSTRAINT class_fk FOREIGN KEY(c_cid, c_cno) REFERENCES course(c_id, c_no)
+);
+INSERT INTO CLASS VALUES(1, '20200101', 1, '명신관');
+INSERT INTO CLASS VALUES(1, '20200102', 1, '명신관');
+INSERT INTO CLASS VALUES(2, '20200103', 1, '명신관');
+INSERT INTO CLASS VALUES(2, '20200103', 2, '명신관');
+INSERT INTO CLASS VALUES(2, '20200103', 3, '명신관');
 
-INSERT INTO CLASS VALUES(1, 20200101, 1, '명신관');
-INSERT INTO CLASS VALUES(1, 20200102, 1, '명신관');
-INSERT INTO CLASS VALUES(2, 20200103, 1, '명신관');
-INSERT INTO CLASS VALUES(2, 20200103, 2, '명신관');
-INSERT INTO CLASS VALUES(2, 20200103, 3, '명신관');
+CREATE TABLE teach(
+t_cid varchar2(8), 
+t_cno NUMBER, 
+t_year NUMBER, 
+t_semester NUMBER, 
+t_max NUMBER, 
+t_time NUMBER, 
+CONSTRAINT teach_pk PRIMARY KEY(t_cid, t_cno, t_year, t_semester), 
+CONSTRAINT teach_fk FOREIGN KEY(t_cid, t_cno) REFERENCES course(c_id, c_no)
+);
+INSERT INTO TEACH VALUES('20200101', 1, 2020, 2, 31, 12);
+INSERT INTO TEACH VALUES('20200101', 2, 2020, 2, 30, 14);
+INSERT INTO TEACH VALUES('20200103', 1, 2020, 2, 63, 33);
+INSERT INTO TEACH VALUES('20200103', 2, 2020, 2, 64, 34);
+INSERT INTO TEACH VALUES('20200103', 3, 2020, 2, 65, 35);
+
+CREATE TABLE enroll(
+e_sid varchar2(7),
+e_cid varchar2(8), 
+e_cno NUMBER, 
+e_year NUMBER, 
+e_semester NUMBER, 
+CONSTRAINT enroll_pk PRIMARY KEY(e_sid, e_cid),
+CONSTRAINT enroll_fk_student FOREIGN KEY(e_sid) REFERENCES student(s_id), 
+CONSTRAINT enroll_fk_teach FOREIGN KEY(e_cid, e_cno, e_year, e_semester) REFERENCES teach(t_cid, t_cno, t_year, t_semester)
+);
+INSERT INTO ENROLL VALUES('1111111', '20200103', 1, 2020, 2);
+INSERT INTO ENROLL VALUES('9999999', '20200101', 1, 2020, 2);
+INSERT INTO ENROLL VALUES('1010101', '20200101', 2, 2020, 2);
+
+
+
+
