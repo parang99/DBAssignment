@@ -1,36 +1,63 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>¼ö°­½ÅÃ» »ç¿ëÀÚ Á¤º¸ ¼öÁ¤</title>
+<meta charset="UTF-8">
+<title>ìˆ˜ê°•ì‹ ì²­ ì‚¬ìš©ì ì •ë³´ ìˆ˜ì •</title>
 </head>
 <body>
-
 <!-- ... -->
 
 <%
+String dbdriver = "oracle.jdbc.driver.OracleDriver";
+String dburl = "jdbc:oracle:thin:@localhost:1521:orcl";
 
-// ...
+//DBA ê³„ì •
+String user = "dbdb";
+String passwd = "oracle";
+
+Connection myConn = null;
+Statement stmt = null;
+String mySQL = null;
+ResultSet myResultSet = null;
+
+String s_id = request.getParameter("s_id");
+String new_pwd = request.getParameter("s_pwd");
+//String s_name = request.getParameter("s_name");
+//String s_addr = request.getParameter("s_addr");
+
+System.out.println(new_pwd);
 
 try{
+	Class.forName(dbdriver);
+	myConn = DriverManager.getConnection(dburl, user, passwd);
+	stmt = myConn.createStatement();
 	
-	// ...
-	
+	mySQL = "update student set s_pwd = '" +  new_pwd + "' where s_id='" + s_id + "'";
+	int res = stmt.executeUpdate(mySQL);
+	//ë°”ë€ê²Œ ì—†ì„ ë•Œ ìˆ˜ì •ëœ ì‚¬í•­ì´ ì—†ë‹¤ê³ ë„ í‘œì‹œ...? 
+	//í•˜ë ¤ë©´ select s_pwd from student where s_id = s_idë¡œ s_pwd ê°€ì ¸ì˜¨ ë‹¤ìŒì— 
+	//s_pwdë‘ new_pwd ë¹„êµí•´ì„œ ê°™ìœ¼ë©´ ìˆ˜ì •ì‚¬í•­ ì—†ë‹¤ê³  í•¨.
+	if(res > 0){%>
+		<script>
+			alert("ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.");
+			location.href="update.jsp";
+		</script>
+	<%}
 } catch(SQLException ex){
 	String sMessage;
 	if (ex.getErrorCode() == 20002)
-		sMessage = "¾ÏÈ£´Â 4ÀÚ¸® ÀÌ»óÀÌ¾î¾ß ÇÕ´Ï´Ù";
+		sMessage = "ì•”í˜¸ëŠ” 4ìë¦¬ ì´ìƒì´ì–´ì•¼ í•©ë‹ˆë‹¤.";
 	else if (ex.getErrorCode() == 20003)
-		sMessage = "¾ÏÈ£¿¡ °ø¶õÀº ÀÔ·ÂµÇÁö ¾Ê½À´Ï´Ù.";
+		sMessage = "ì•”í˜¸ì— ê³µë€ì€ ì…ë ¥ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.";
 	else
-		sMessage = "Àá½Ã ÈÄ ´Ù½Ã ½ÃµµÇÏ½Ê½Ã¿À";
-}
-
-%>
-
-<!-- ... -->
-
+		sMessage = "ì ì‹œ í›„ ë‹¤ì‹œ ì‹œë„í•˜ì‹­ì‹œì˜¤";%>
+	<script>
+		alert("<%= sMessage %>");
+		location.href="update.jsp";
+	</script>
+<%}%>
 </body>
 </html>

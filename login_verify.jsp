@@ -15,9 +15,13 @@ Connection myConn = null;
 Statement stmt = null;
 String mySQL = null;
 
-Class.forName(dbdriver);
-myConn=DriverManager.getConnection(dburl, user, passwd);
-stmt = myConn.createStatement();
+try{
+	Class.forName(dbdriver);
+	myConn = DriverManager.getConnection(dburl, user, passwd);
+	stmt = myConn.createStatement();
+} catch(SQLException ex){
+	System.err.println("SQLException: " + ex.getMessage());
+}
 
 mySQL="select s_id from student where s_id='" + userID + "'and s_pwd='" + userPassword + "'";
 ResultSet myResultSet = stmt.executeQuery(mySQL);
