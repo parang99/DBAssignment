@@ -32,6 +32,6 @@ BEGIN
 	/* 최종 결과 확인 */
 	SelectTimeTable('1010101', 2020, 2);
 
-	delete from enroll where e_sid = '1010101' and e_cid = 'CN02' and e_cno = 3;
+	delete from enroll where e_sid = '1010101' and e_cid = 'CN02' and e_cno = 1;
 END;
 /

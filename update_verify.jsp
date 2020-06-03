@@ -8,7 +8,7 @@
 <title>수강신청 사용자 정보 수정</title>
 </head>
 <body>
-<!-- ... -->
+
 <%@ include file="top.jsp" %>
 <%
 String dbdriver = "oracle.jdbc.driver.OracleDriver";
