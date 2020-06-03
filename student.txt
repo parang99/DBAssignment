@@ -4,7 +4,6 @@ s_pwd varchar2(20) CONSTRAINT student_nn NOT NULL,
 s_name varchar2(6), 
 s_addr varchar2(60)
 );
-
 INSERT INTO STUDENT VALUES('1111111', 'oneone', '정하나', '경기도 광명시 광덕산로 26');
 INSERT INTO STUDENT VALUES('2222222', 'twotwo', '김둘둘', '서울특별시 용산구 청파로 47길');
 INSERT INTO STUDENT VALUES('3333333', 'three', '이셋셋', '서울특별시 성북구 성북로4길 52');
@@ -15,7 +14,3 @@ INSERT INTO STUDENT VALUES('7777777', 'seven', '권일곱', '경기도 광명시 하안로')
 INSERT INTO STUDENT VALUES('8888888', 'eight', 'Janet', '경기도 광명시 일직로');
 INSERT INTO STUDENT VALUES('9999999', 'nine', 'Stella', '경기도 광명시 오리로');
 INSERT INTO STUDENT VALUES('1010101', 'tenten', 'Juno', '경기도 광명시 광명로');
-
-
-
-
