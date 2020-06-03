@@ -1,6 +1,4 @@
 drop table enroll;
-drop table teach;
-drop table class;
 drop table course;
 drop table student;
 purge recyclebin;

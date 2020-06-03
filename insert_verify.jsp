@@ -8,9 +8,9 @@
 </head>
 <body>
 <%
-	String e_sid = (String)session.getAttribute("user");
-	String e_cid = request.getParameter("c_id");
-	int e_cno = Integer.parseInt(request.getParameter("c_no"));
+	String s_id = (String)session.getAttribute("user");
+	String c_id = request.getParameter("c_id");
+	int c_no = Integer.parseInt(request.getParameter("c_no"));
 %>
 <%
 	Connection myConn = null;
@@ -28,9 +28,9 @@
 	}
 	//CallableStatement를 통한 저장 프로시저(insertEnroll) 사용
 	CallableStatement cstmt = myConn.prepareCall("{call InsertEnroll(?, ?, ?, ?)}");
-	cstmt.setString(1, e_sid);
-	cstmt.setString(2, e_cid);
-	cstmt.setInt(3, e_cno);
+	cstmt.setString(1, s_id);
+	cstmt.setString(2, c_id);
+	cstmt.setInt(3, c_no);
 	cstmt.registerOutParameter(4, java.sql.Types.VARCHAR);
 	try{
 		cstmt.execute();

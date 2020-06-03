@@ -9,7 +9,7 @@ IS
 	nSumCourseCredit		NUMBER;
 	nCourseCredit		NUMBER;
 	nCnt			NUMBER;
-	nTeachMax		NUMBER;
+	nCourseMax		NUMBER;
 BEGIN
 	result := '';
 	DBMS_OUTPUT.put_line('#');
@@ -28,7 +28,7 @@ BEGIN
 	SELECT c_credit
 	INTO nCourseCredit
 	FROM course
-	WHERE c_id = sCourseId and c_no = nCourseNo;
+	WHERE c_id = sCourseId and c_no = nCourseNo and c_year = nYear and c_semester = nSemester;
 
 	IF (nSumCourseCredit + nCourseCredit > 18)
 	THEN
@@ -47,17 +47,17 @@ BEGIN
 	END IF;
 
 	/* 에러 처리 3 : 수강신청 인원 초과 여부 */
-	SELECT t_max
-	INTO nTeachMax
-	FROM teach
-	WHERE t_year = nYear and t_semester = nSemester and t_cid = sCourseId and t_cno = nCourseNo;
+	SELECT c_max
+	INTO nCourseMax
+	FROM course
+	WHERE c_year = nYear and c_semester = nSemester and c_id = sCourseId and c_no = nCourseNo ;
 
 	SELECT COUNT(*)
 	INTO nCnt
 	FROM enroll
 	WHERE e_year = nYear and e_semester = nSemester and e_cid = sCourseId and e_cno = nCourseNo;
 	
-	IF (nCnt >= nTeachMax)
+	IF (nCnt >= nCourseMax)
 	THEN
 		RAISE too_many_students;
 	END IF;
@@ -66,15 +66,15 @@ BEGIN
 	SELECT COUNT(*)
 	INTO nCnt
 	FROM(
-		SELECT t_time
-		FROM teach
-		WHERE t_year = nYear and t_semester = nSemester and t_cid = sCourseId and t_cno = nCourseNo
+		SELECT c_time
+		FROM course
+		WHERE c_year = nYear and c_semester = nSemester and c_id = sCourseId and c_no = nCourseNo
 		
 		INTERSECT
 		
-		SELECT t_time
-		FROM teach, enroll
-		WHERE e_sid = sStudentId and e_year	= nYear and e_semester = nSemester and t_year = nYear and t_semester = nSemester and e_cid = t_cid and e_cno = t_cno
+		SELECT c_time
+		FROM course, enroll
+		WHERE e_sid = sStudentId and e_year = nYear and e_semester = nSemester and c_year = nYear and c_semester = nSemester and e_cid = c_id and e_cno = c_no
 	);
 	
 	IF (nCnt > 0)
