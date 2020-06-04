@@ -3,13 +3,17 @@ Set ServerOutput On;
 
 DECLARE 
 	result VARCHAR2(50) := '';
+	nSum NUMBER := 0;
+	nCredit NUMBER := 0;
 BEGIN
 	DBMS_OUTPUT.enable;
 	DBMS_OUTPUT.put_line('******************** Insert 및 에러 처리 테스트 ********************');
 
-	/* 에러 처리 2: 동일한 과목 신청 여부 : 데이터베이스 과목 신청 */
+	/* 에러 처리 2: 동일한 과목 신청 여부 : 컴퓨터수학 신청 */
 	/*InsertEnroll('20011234', 'C400', 3, result);*/
 	/*DBMS_OUTPUT.put_line('결과 : ' || result);*/
+	InsertEnroll('1010101', 'CM01', 3, result);
+	DBMS_OUTPUT.put_line('결과 : ' || result);
 
 	/* 에러 처리 3: 수강신청 인원 초과 여부 : 졸업프로젝트1 신청 */
 	InsertEnroll('1010101', 'GP01', 1, result);
@@ -30,7 +34,8 @@ BEGIN
 	DBMS_OUTPUT.put_line('******************** CURSOR를 이용한 SELECT 테스트 ********************');
 
 	/* 최종 결과 확인 */
-	SelectTimeTable('1010101', 2020, 2);
+	SelectTimeTable('1010101', 2020, 2, nSum, nCredit);
+	DBMS_OUTPUT.put_line('결과 : ' || nSum || ' 그리고 ' || nCredit);
 
 	delete from enroll where e_sid = '1010101' and e_cid = 'CN02' and e_cno = 1;
 END;

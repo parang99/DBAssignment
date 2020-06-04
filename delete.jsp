@@ -22,6 +22,10 @@ String dburl = "jdbc:oracle:thin:@localhost:1521:orcl";
 String user = "dbdb";
 String passwd = "oracle";
 String dbdriver = "oracle.jdbc.driver.OracleDriver";
+String s_id = (String)session.getAttribute("user");
+
+int nSum = 0;
+int nCredit = 0;
 
 try{
 	Class.forName(dbdriver);
@@ -51,9 +55,32 @@ if (myResultSet != null){
 <% 
 		}
 	}
+
+	CallableStatement cstmt = myConn.prepareCall("{call SelectTimeTable(?, ?, ?, ?, ?)}");
+	cstmt.setString(1, s_id);
+	cstmt.setInt(2, 2020);
+	cstmt.setInt(3, 2);
+	cstmt.registerOutParameter(4, java.sql.Types.NUMERIC);
+	cstmt.registerOutParameter(5, java.sql.Types.NUMERIC);
+	try{
+		cstmt.execute();
+		nSum = cstmt.getInt(4);
+		nCredit = cstmt.getInt(5);
+	
+	} catch(SQLException ex){
+		System.err.println("SQLException: " + ex.getMessage());
+	}
 	stmt.close();
 	myConn.close();
 %>
 </table>
+<br>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	신청 과목 수 : <%= nSum %> </div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	신청 학점 수 : <%= nCredit %> </div>
+<div align="center">
+   <br><button type="button" onclick="location.href='main.jsp'">메인 화면</button>
+</div>
 </body>
 </html>

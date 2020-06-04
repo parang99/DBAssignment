@@ -54,12 +54,14 @@ if (myResultSet != null){
 }
 %>
 <!-- 사용자 정보 보여주기 -->
+<div align="center">
 <form method="post" action="update_verify.jsp">
-	<div>아이디 : <br><input type="text" name="s_id" value=<%= s_id %> size=40></div>
-	<div>비밀번호 : <br><input type="text" name="s_pwd" value=<%= s_pwd %> size=40></div>
-	<div>이름 : <br><input type="text" name="s_name" value=<%= s_name %> size=40></div>
-	<div>주소 : <br><input type="text" name="s_addr" value="<%= s_addr %>" size=40></div>
+	<br><br><div>아이디 : <input type="text" name="s_id" value=<%= s_id %> size=40></div>
+	<div>비밀번호 : <input type="text" name="s_pwd" value=<%= s_pwd %> size=40></div>
+	<div>이름 : <input type="text" name="s_name" value=<%= s_name %> size=40></div>
+	<div>주소 : <input type="text" name="s_addr" value="<%= s_addr %>" size=40></div>
 	<div><br><button type="button" onclick="location.href='main.jsp'">메인 화면</button><input type="submit" value="정보 수정"></div>
 </form>
+</div>
 </body>
 </html>

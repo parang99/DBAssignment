@@ -1,9 +1,10 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>수강신청 입력</title>
 </head>
 <body>
@@ -22,7 +23,10 @@ String dburl = "jdbc:oracle:thin:@localhost:1521:orcl";
 String user = "dbdb";
 String passwd = "oracle";
 String dbdriver = "oracle.jdbc.driver.OracleDriver";
+String s_id = (String)session.getAttribute("user");
 
+int nSum = 0;
+int nCredit = 0;
 try{
 	Class.forName(dbdriver);
 	myConn = DriverManager.getConnection(dburl, user, passwd);
@@ -32,6 +36,9 @@ try{
 }
 
 mySQL = "select c_id, c_no, c_name, c_credit from course where c_id not in (select e_cid from enroll where e_sid = '" + session_id + "')";
+//mySQL = "select c_id, c_no, c_name, c_credit from course where c_id not in (select e_cid from enroll where e_sid = '" + session_id + "') union select c_id, c_no, c_name, c_credit from course where c_no not in (select e_cno from enroll where e_sid = '" + session_id + "')";
+//여기서부터
+//mySQL = "select c_id, c_no, c_name, c_credit from course where c_no not inc_id not in (select e_cid from enroll where e_sid = '" + session_id + "')";
 
 myResultSet = stmt.executeQuery(mySQL);
 
@@ -51,9 +58,32 @@ if (myResultSet != null){
 <% 
 		}
 	}
+
+	CallableStatement cstmt = myConn.prepareCall("{call SelectTimeTable(?, ?, ?, ?, ?)}");
+	cstmt.setString(1, s_id);
+	cstmt.setInt(2, 2020);
+	cstmt.setInt(3, 2);
+	cstmt.registerOutParameter(4, java.sql.Types.NUMERIC);
+	cstmt.registerOutParameter(5, java.sql.Types.NUMERIC);
+	try{
+		cstmt.execute();
+		nSum = cstmt.getInt(4);
+		nCredit = cstmt.getInt(5);
+	
+	} catch(SQLException ex){
+		System.err.println("SQLException: " + ex.getMessage());
+	}
 	stmt.close();
 	myConn.close();
 %>
 </table>
+<br>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	현재 신청 학점 수 : <%= nCredit %> </div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	신청 가능 학점 수 : <%= 18 - nCredit %> </div>
+<div align="center">
+   <br><button type="button" onclick="location.href='main.jsp'">메인 화면</button>
+</div>
 </body>
 </html>
