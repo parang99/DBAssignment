@@ -57,6 +57,8 @@ try{
 		sMessage = "암호는 4자리 이상이어야 합니다.";
 	else if (ex.getErrorCode() == 20003)
 		sMessage = "암호에 공란은 입력되지 않습니다.";
+	else if (ex.getErrorCode() == 1407) //비밀번호 null값 처리
+		sMessage = "비밀번호를 입력해주세요.";
 	else
 		sMessage = "잠시 후 다시 시도하십시오.";%>
 	<script>

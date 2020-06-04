@@ -35,10 +35,7 @@ try{
 	System.err.println("SQLException: " + ex.getMessage());
 }
 
-mySQL = "select c_id, c_no, c_name, c_credit from course where c_id not in (select e_cid from enroll where e_sid = '" + session_id + "')";
-//mySQL = "select c_id, c_no, c_name, c_credit from course where c_id not in (select e_cid from enroll where e_sid = '" + session_id + "') union select c_id, c_no, c_name, c_credit from course where c_no not in (select e_cno from enroll where e_sid = '" + session_id + "')";
-//여기서부터
-//mySQL = "select c_id, c_no, c_name, c_credit from course where c_no not inc_id not in (select e_cid from enroll where e_sid = '" + session_id + "')";
+mySQL = "select c_id, c_no, c_name, c_credit from course where (c_id, c_no) not in (select e_cid, e_cno from enroll where e_sid = '" + session_id + "')";
 
 myResultSet = stmt.executeQuery(mySQL);
 
