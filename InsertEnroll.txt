@@ -10,6 +10,7 @@ IS
 	nCourseCredit		NUMBER;
 	nCnt			NUMBER;
 	nCourseMax		NUMBER;
+	v_courseMax		course%ROWTYPE;
 BEGIN
 	result := '';
 	DBMS_OUTPUT.put_line('#');
@@ -48,7 +49,7 @@ BEGIN
 
 	/* 에러 처리 3 : 수강신청 인원 초과 여부 */
 	SELECT c_max
-	INTO nCourseMax
+	INTO v_courseMax.c_max
 	FROM course
 	WHERE c_year = nYear and c_semester = nSemester and c_id = sCourseId and c_no = nCourseNo ;
 
@@ -57,7 +58,7 @@ BEGIN
 	FROM enroll
 	WHERE e_year = nYear and e_semester = nSemester and e_cid = sCourseId and e_cno = nCourseNo;
 	
-	IF (nCnt >= nCourseMax)
+	IF (nCnt >= v_courseMax.c_max)
 	THEN
 		RAISE too_many_students;
 	END IF;

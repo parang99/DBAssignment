@@ -2,12 +2,17 @@ Set ServerOutput On;
 /
 
 DECLARE 
+	CURSOR enroll_list(v_ecid enroll.e_cid%TYPE) IS
+	SELECT e_sid
+	FROM enroll
+	WHERE e_cid = v_ecid;
+	
 	result VARCHAR2(50) := '';
 	nSum NUMBER := 0;
 	nCredit NUMBER := 0;
 BEGIN
 	DBMS_OUTPUT.enable;
-	DBMS_OUTPUT.put_line('******************** Insert 및 에러 처리 테스트 ********************');
+	DBMS_OUTPUT.put_line('********************* Insert 및 에러 처리 테스트 *********************');
 
 	/* 에러 처리 2: 동일한 과목 신청 여부 : 컴퓨터수학 신청 */
 	/*InsertEnroll('20011234', 'C400', 3, result);*/
@@ -35,8 +40,20 @@ BEGIN
 
 	/* 최종 결과 확인 */
 	SelectTimeTable('1010101', 2020, 2, nSum, nCredit);
-	DBMS_OUTPUT.put_line('결과 : ' || nSum || ' 그리고 ' || nCredit);
+	/*DBMS_OUTPUT.put_line('결과 : ' || nSum || ' 그리고 ' || nCredit);*/
 
 	delete from enroll where e_sid = '1010101' and e_cid = 'CN02' and e_cno = 1;
+
+	DBMS_OUTPUT.put_line('*********** 파라미터 있는 CURSOR를 이용한 수강생 확인 테스트 ***********');
+	DBMS_OUTPUT.put_line('데이터베이스프로그래밍(DB01)을 신청한 학생입니다.');
+
+	/*파라미터 변수의 값을 전달*/
+	FOR enlist IN enroll_list('DB01') LOOP
+		DBMS_OUTPUT.PUT_LINE('아이디 : ' || enlist.e_sid);
+	END LOOP;
+
+	EXCEPTION
+		WHEN OTHERS THEN
+			DBMS_OUTPUT.PUT_LINE('ERR MESSAGE : ' || SQLERRM);
 END;
 /
