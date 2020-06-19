@@ -1,11 +1,13 @@
-Set ServerOutput On;
-/
 
 DECLARE 
 	CURSOR enroll_list(v_ecid enroll.e_cid%TYPE) IS
 	SELECT e_sid
 	FROM enroll
 	WHERE e_cid = v_ecid;
+
+	CURSOR course_list IS
+	SELECT e_cid, ST_NUM
+	FROM COURSE_SIZE;
 	
 	result VARCHAR2(50) := '';
 	nSum NUMBER := 0;
@@ -50,6 +52,13 @@ BEGIN
 	/*파라미터 변수의 값을 전달*/
 	FOR enlist IN enroll_list('DB01') LOOP
 		DBMS_OUTPUT.PUT_LINE('아이디 : ' || enlist.e_sid);
+	END LOOP;
+
+	DBMS_OUTPUT.put_line('*********** VIEW를 이용한 과목별 수강생 인원 수 확인 테스트 ***********');
+	
+	/*COURSE_SIZE 뷰 이용*/
+	FOR clist IN course_list LOOP
+		DBMS_OUTPUT.put_line('과목 아이디 : '|| clist.e_cid || ', 인원 수 : ' || clist.ST_NUM);
 	END LOOP;
 
 	EXCEPTION
