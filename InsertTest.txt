@@ -1,3 +1,5 @@
+set ServerOutput On;
+
 
 DECLARE 
 	CURSOR enroll_list(v_ecid enroll.e_cid%TYPE) IS

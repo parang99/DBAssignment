@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>데이터베이스를 활용한 수강신청 시스템입니다.</title>
 </head>
 <body>
