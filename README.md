@@ -8,7 +8,7 @@ DB schema
 - course(c_id: varchar2, c_no: number, c_year: number, c_semester: number, c_name: varchar2, c_credit: number, c_max: number, c_time: number, c_where: varchar2)
 - enroll(e_sid: varchar2, e_cid: varchar2, e_cno: number, e_year: number, e_semester: number)
 ---
-jsp 코드 설명
+jsp 설명
 - main.jsp : 메인화면
 - top.jsp : 탭(로그인, 사용자 정보 수정, 수강신청 입력, 수강신청 삭제, 수강신청 조회) 표시
 - login.jsp : 로그인 화면
@@ -22,7 +22,7 @@ jsp 코드 설명
 - delete.verify.jsp : 수강신청 삭제 관리
 - select.jsp : 수강신청 조회 화면
 ---
-sql 코드 설명
+sql 설명
 - table.sql : 테이블 생성 및 레코드 삽입
 - enrollView.sql : View 생성
 - updateTrigger.sql : trigger 작성
