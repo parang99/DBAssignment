@@ -1,7 +1,5 @@
 # 수강신청 프로그램
 Work with JooyeonJung
-
----
 Use Eclipse, Apache Tomcat, Oracle
 
 ---
