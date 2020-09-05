@@ -1,10 +1,9 @@
 # 수강신청 프로그램
-This project is worked with JooyeonJung
+Work with JooyeonJung
+
 ---
-Eclipse, Tomcat, Oracle
----
-.txt is table   
-.jsp is opened in eclipse   
+Use Eclipse, Apache Tomcat, Oracle
+
 ---
 DB schema
 - student(s_id: varchar2, s_pwd: varchar2, s_name: varchar2, s_addr varchar2)
@@ -28,13 +27,12 @@ jsp 코드 설명
 sql 코드 설명
 - table.sql : 테이블 생성 및 레코드 삽입
 - enrollView.sql : View 생성
-- InsertTest.sql : 
-- updateTrigger.sql : 
-- verify_enroll.sql :
-- InsertEnroll.sql : 
-- function.sql : 
-
-
-프로젝트 기여도
-parang : insert, select, delete, etc..
-jooyeonjung : login, update, trigger, view, etc..
+- updateTrigger.sql : trigger 작성
+- function.sql : 사용자 정의 함수
+- InsertTest.sql : 수강신청 가능 여부 테스트
+- verify_enroll.sql : callableStament에서 사용되는 stored procedure
+- InsertEnroll.sql : 수강신청 입력 처리. insert_verify.jsp에서 사용. 
+---
+프로젝트 기여도   
+parang99 : insert, select, delete, etc..   
+JooyeonJung : login, update, trigger, view, etc..   
