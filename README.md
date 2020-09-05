@@ -31,6 +31,6 @@ sql 설명
 - verify_enroll.sql : callableStament에서 사용되는 stored procedure
 - InsertEnroll.sql : 수강신청 입력 처리. insert_verify.jsp에서 사용. 
 ---
-프로젝트 기여도   
+프로젝트 기여   
 parang99 : insert, select, delete, etc..   
 JooyeonJung : login, update, trigger, view, etc..   
